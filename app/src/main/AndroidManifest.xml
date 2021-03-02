@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.citiesnearlocation">
-    <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="${mapsApiKey}" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CitiesNearLocation">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDReyV3hE08sVsFud7mTj1GhYETWzZPmrw" />
+
         <activity android:name=".ResultActivity"></activity>
         <activity android:name=".LocationActivity">
             <intent-filter>
