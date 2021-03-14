@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,6 +36,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_location);
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //       setSupportActionBar(toolbar);
+        TextView background = (TextView) findViewById(R.id.backgroundTextview);
+        background.setBackgroundColor(Color.argb(255, 225, 226, 232));
+        background.setTextColor(Color.argb(255, 225, 226, 232));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -48,8 +53,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.app_bar_help);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        MenuItem helpItem = menu.findItem(R.id.app_bar_help);
+        MenuItem colorItem = menu.findItem(R.id.app_bar_color);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider((MenuItem) menu.findItem(R.id.action_share));
         return super.onCreateOptionsMenu(menu);
     }
@@ -65,13 +70,31 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                Intent intent = new Intent(this, ResultActivity.class);
-                startActivity(intent);
-                return true;
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "This is a message for you");
+                shareActionProvider.setShareIntent(intent);
+                break;
+
+            case R.id.app_bar_color:
+                TextView background =(TextView) findViewById(R.id.backgroundTextview);
+                if (background.getCurrentTextColor()==Color.argb(255,121, 122, 128 )) {
+                    background.setBackgroundColor(Color.argb(255, 225, 226, 232));
+                    background.setTextColor(Color.argb(255, 225, 226, 232));
+                } else if (background.getCurrentTextColor()==Color.argb(255,225, 226, 232)) {
+                    background.setBackgroundColor(Color.argb(255, 121, 122, 128));
+                    background.setTextColor(Color.argb(255, 121, 122, 128));
+                }
+                break;
+
+            case R.id.app_bar_help:
+                Intent helpIntent = new Intent(LocationActivity.this, HelpActivity.class);
+                startActivity(helpIntent);
+                break;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CitiesNearLocation">
+        <activity android:name=".HelpActivity"></activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDReyV3hE08sVsFud7mTj1GhYETWzZPmrw" />
 
-        <activity android:name=".ResultActivity"></activity>
+        <activity android:name=".ResultActivity" />
         <activity android:name=".LocationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
