@@ -7,13 +7,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
 import android.content.Intent;
+import android.database.CharArrayBuffer;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -28,12 +32,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ShareActionProvider shareActionProvider;
     private double latitude = 0;
     private double longitude = 0;
+    private String url1 = "https://numbersapi.p.rapidapi.com/v1/geo/locations/";
+    private String url2 = "/nearbyCities";
+    //33.832213-118.387099
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +59,25 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         background.setTextColor(Color.argb(255, 225, 226, 232));
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        Button findCitiesButton = findViewById(R.id.button);
+        findCitiesButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LocationActivity.this,ResultActivity.class);
+                EditText inputRadius = findViewById(R.id.inputRadius);
+
+                if (latitude != 0) {
+                    intent.putExtra("radius",inputRadius.getText().toString());
+                    intent.putExtra("longitude",longitude);
+                    intent.putExtra("latitude",latitude);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(LocationActivity.this,"Click on the map and enter a radius before clicking this.", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void onMapReady(GoogleMap googleMap) {
@@ -74,6 +106,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         MenuItem helpItem = menu.findItem(R.id.app_bar_help);
         MenuItem colorItem = menu.findItem(R.id.app_bar_color);
         shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider((MenuItem) menu.findItem(R.id.action_share));
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -133,6 +166,35 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
 
     }
+    private class getNearbyCities extends AsyncTask<String,Void,String> {
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+            String[] cityArray = null;
+            try {
+                URL url = new URL(url1 + latitude + "-" + longitude + url2);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setRequestProperty("x-rapidapi-key", "e4c0313cc4msh924249226a4e9bcp187dc6jsnc0721a4eaa04");
+                InputStream in = urlConnection.getInputStream();
+                if (in==null) {
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(in));
+                
+
+            } catch (Exception e) {
+                return null;
+            }
+
+            return null;
+        }
+
+    }
 
 
 }
+
