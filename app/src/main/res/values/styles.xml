@@ -2,19 +2,33 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:forceDarkAllowed">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name = "backgroundColor">@color/white</item>
+        <item name = "android:textColor">@color/offBlack</item>
         <item name = "colorPrimary">@color/colorPrimary</item>
         <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name = "colorAccent">@color/colorAccent</item>
+        <item name = "colorAccent">@color/purple_700</item>
     </style>
 
-    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name = "colorPrimary">@color/purple_200</item>
-        <item name = "colorPrimaryDark">@color/teal_700</item>
-        <item name = "colorAccent">@color/colorAccent</item>
+    <style name="DarkAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:forceDarkAllowed">true</item>
+        <item name = "backgroundColor">@color/offBlack</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name = "colorPrimary">@color/colorPrimary</item>
+        <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name = "colorAccent">@color/purple_700</item>
+    </style>
+
+    <style name="Light" parent="AppTheme"/>
+    <style name="Dark" parent="DarkAppTheme"/>
+
+    <style name="ToolBarTheme" parent="Theme.AppCompat">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:forceDarkAllowed">true</item>
+        <item name = "colorPrimary">@color/colorPrimary</item>
+        <item name = "colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name = "colorAccent">@color/purple_700</item>
     </style>
 
 </resources>

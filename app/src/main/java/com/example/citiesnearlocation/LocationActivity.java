@@ -2,9 +2,12 @@ package com.example.citiesnearlocation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.ShareActionProvider;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,17 +43,26 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private String url1 = "https://wft-geo-db.p.rapidapi.com/v1/geo/locations/";
     private String url2 = "/nearbyCities";
     private Intent intent;
-
+    private boolean isDarkModeOn;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-//          Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//          setSupportActionBar(toolbar);
-        TextView background = (TextView) findViewById(R.id.backgroundTextview);
-        background.setBackgroundColor(Color.argb(255, 225, 226, 232));
-        background.setTextColor(Color.argb(255, 225, 226, 232));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
+        if (isDarkModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -61,7 +73,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             public void onClick(View v) {
                 EditText inputRadius = findViewById(R.id.inputRadius);
                 intent = new Intent(LocationActivity.this,ResultActivity.class);
-                if (latitude != 0) {
+                if(inputRadius.getText().toString().trim().isEmpty() == true) {
+                    Toast.makeText(LocationActivity.this,"Click on the map and enter a radius before continuing.", Toast.LENGTH_LONG).show();
+                 } else if (latitude != 0) {
                     String latitudeLongitudeInput = null;
                     if (longitude < 0) {
                         latitudeLongitudeInput = latitude + "" + longitude;
@@ -71,7 +85,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
                     new getNearbyCities().execute(latitudeLongitudeInput,inputRadius.getText().toString());
                 } else {
-                    Toast.makeText(LocationActivity.this,"Click on the map and enter a radius before clicking this.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LocationActivity.this,"Click on the map and enter a radius before continuing.", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -99,13 +113,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem helpItem = menu.findItem(R.id.app_bar_help);
         MenuItem colorItem = menu.findItem(R.id.app_bar_color);
-        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider((MenuItem) menu.findItem(R.id.action_share));
+        MenuItem shareItem = menu.findItem(R.id.action_share);
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider((MenuItem)menu.findItem(R.id.action_share));
+        setShareActionIntent("Use this app to find cities near any location!");
         return super.onCreateOptionsMenu(menu);
     }
 
     private void setShareActionIntent(String text) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType(text);
+        intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         shareActionProvider.setShareIntent(intent);
     }
@@ -121,13 +137,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 break;
 
             case R.id.app_bar_color:
-                TextView background =(TextView) findViewById(R.id.backgroundTextview);
-                if (background.getCurrentTextColor()==Color.argb(255,121, 122, 128 )) {
-                    background.setBackgroundColor(Color.argb(255, 225, 226, 232));
-                    background.setTextColor(Color.argb(255, 225, 226, 232));
-                } else if (background.getCurrentTextColor()==Color.argb(255,225, 226, 232)) {
-                    background.setBackgroundColor(Color.argb(255, 121, 122, 128));
-                    background.setTextColor(Color.argb(255, 121, 122, 128));
+                if(isDarkModeOn == false) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor.putBoolean("isDarkModeOn",true);
+                    editor.apply();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor.putBoolean("isDarkModeOn",false);
+                    editor.apply();
                 }
                 break;
 

@@ -2,21 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <item android:id="@+id/app_bar_color"
-        android:title="Color"
-        android:icon="@drawable/ic_color_foreground"
-        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/app_bar_help"
         android:icon="@drawable/ic_options_foreground"
+        android:orderInCategory="1"
+        android:iconTint="@color/white"
         android:title="Help"
         app:showAsAction="ifRoom|collapseActionView"/>
 
+    <item android:id="@+id/app_bar_color"
+        android:title="Color"
+        android:iconTint="@color/white"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_color_foreground"
+        app:showAsAction="ifRoom" />
+
     <item android:id="@+id/action_share"
         android:title="Share"
-        android:icon="@drawable/ic_options_foreground"
+        android:orderInCategory="3"
         app:showAsAction="ifRoom"
         app:actionProviderClass="androidx.appcompat.widget.ShareActionProvider"/>
-
 </menu>

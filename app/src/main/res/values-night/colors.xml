@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="backgroundColor">#FCFCFC</color>
-    <color name="textColor">#000000</color>
-    <color name="hintColor">#000000</color>
+    <color name="backgroundColor">#212121</color>
+    <color name="textColor">#FFFFFF</color>
     <color name="buttonTextColor">#FFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
