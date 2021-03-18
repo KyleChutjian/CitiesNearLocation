@@ -8,7 +8,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -51,9 +49,11 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
+        // create action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Dark Mode Saving and Setting
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
@@ -63,12 +63,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        // Map fragment creation
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // find button creation
         Button findCitiesButton = findViewById(R.id.button);
         findCitiesButton.setOnClickListener(new View.OnClickListener() {
 
+            // called on Map click - when user selects location
             @Override
             public void onClick(View v) {
                 EditText inputRadius = findViewById(R.id.inputRadius);
@@ -82,7 +85,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     } else {
                         latitudeLongitudeInput = latitude + "+" + longitude;
                     }
-
                     new getNearbyCities().execute(latitudeLongitudeInput,inputRadius.getText().toString());
                 } else {
                     Toast.makeText(LocationActivity.this,"Click on the map and enter a radius before continuing.", Toast.LENGTH_LONG).show();
@@ -91,12 +93,16 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
+    // initial map
     public void onMapReady(GoogleMap googleMap) {
+
+        // create map with camera focus near Hamden, CT
         mMap = googleMap;
-        LatLng sydney = new LatLng(41.3839, -72.9026);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Hamden"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng hamden = new LatLng(41.3839, -72.9026);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(hamden));
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+            // called when map is clicked, stores new location values
             @Override
             public void onMapClick(LatLng latLng) {
                 latitude = latLng.latitude;
@@ -108,6 +114,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
+    // initialize Action Bar options menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -119,6 +126,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         return super.onCreateOptionsMenu(menu);
     }
 
+    // Set share intent for share button
     private void setShareActionIntent(String text) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
@@ -126,16 +134,19 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         shareActionProvider.setShareIntent(intent);
     }
 
+    // called for corresponding options on click
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            // share intent when share button is clicked
             case R.id.action_share:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "This is a message for you");
+                intent.putExtra(Intent.EXTRA_TEXT, "Check out this cool app!");
                 shareActionProvider.setShareIntent(intent);
                 break;
 
+                // change app theme to dark mode or to day mode
             case R.id.app_bar_color:
                 if(isDarkModeOn == false) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -148,6 +159,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 }
                 break;
 
+                // open Help screen
             case R.id.app_bar_help:
                 Intent helpIntent = new Intent(LocationActivity.this, HelpActivity.class);
                 startActivity(helpIntent);
@@ -159,6 +171,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         return super.onOptionsItemSelected(item);
     }
 
+    // called when find cities button is clicked - if radius or location not yet input, toast pops up
     public void findCities(View view) {
         Intent intent = new Intent(LocationActivity.this,ResultActivity.class);
         EditText inputRadius = findViewById(R.id.inputRadius);
@@ -173,14 +186,31 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
     }
+
+    // called if no cities are found nearby
+    public void oceanAlert(){
+        Toast.makeText(this,"There are no cities near your selected location. Please increase your radius (up to 100) or choose a new location if no cities are found.", Toast.LENGTH_LONG).show();
+    }
+
+    // background thread to retrieve from RESTAPI
     private class getNearbyCities extends AsyncTask<String,Void,String> {
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            System.out.println("ON POST " + cityArrayList);
-            intent.putStringArrayListExtra("cityArray",cityArrayList);
-            startActivity(intent);
+            // if no cities are found, call oceanAlert to tell the user - does not open cities result
+            if (cityArrayList.size() == 0){
+                oceanAlert();
+                return;
+            }
+            // else, if cities are found, open results!
+            else {
+                System.out.println("ON POST " + cityArrayList);
+                intent.putStringArrayListExtra("cityArray",cityArrayList);
+                startActivity(intent);
+            }
+
+
         }
 
         @Override
@@ -216,9 +246,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
+    // retrieves Array of cities given values for api
     public ArrayList<String> getStringFromBuffer(BufferedReader bufferedReader) {
         cityArrayList = new ArrayList<String>();
-        String[] cityArray = new String[10];
         StringBuffer buffer = new StringBuffer();
         String line;
 
@@ -237,6 +267,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     JSONObject JSONObject = new JSONObject(jsonArray.get(i).toString());
                     cityArrayList.add(JSONObject.getString("city"));
                 }
+
                 System.out.println("First City in Array: " + cityArrayList.get(0));
                 System.out.println("Entire City Array: " + cityArrayList.toString());
                 return cityArrayList;

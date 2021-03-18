@@ -3,6 +3,7 @@
     <color name="backgroundColor">#FCFCFC</color>
     <color name="textColor">#000000</color>
     <color name="hintColor">#000000</color>
+    <color name="cardColor">#3f5ccc</color>
     <color name="buttonTextColor">#FFFFFF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>

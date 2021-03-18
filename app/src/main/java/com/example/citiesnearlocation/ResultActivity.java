@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +23,8 @@ import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private Adapter adapter;
     private ShareActionProvider shareActionProvider;
     private boolean isDarkModeOn;
     private SharedPreferences sharedPreferences;
@@ -30,11 +35,14 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        // Enable Action bar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // Dark Mode Saving and Setting
         sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
         isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn", false);
@@ -44,17 +52,20 @@ public class ResultActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-
+        // retrieve cities
         cityArrayList = getIntent().getStringArrayListExtra("cityArray");
         System.out.println("ResultArray: " + cityArrayList.toString());
         System.out.println("CityArray: " + cityArrayList.toString());
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,cityArrayList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        // populate recycle view
+        recyclerView = findViewById(R.id.recyclerView);
+        adapter = new Adapter(this, cityArrayList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
+    // CODE FOR ACTION BAR - Same from LocationActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
