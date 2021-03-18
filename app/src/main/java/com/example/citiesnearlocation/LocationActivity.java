@@ -31,6 +31,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+/*
+
+*  Developed by: Kyle Chutjian & Max Petruzziello
+*  Date Submitted: 3/18/2021
+*  CitiesNearLocation Application
+
+ */
+
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private ArrayList<String> cityArrayList = new ArrayList<String>();
@@ -107,7 +115,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             public void onMapClick(LatLng latLng) {
                 latitude = latLng.latitude;
                 longitude = latLng.longitude;
-                System.out.println(latitude + ", " + longitude);
                 mMap.clear();
                 mMap.addMarker(new MarkerOptions().position(latLng));
             }
@@ -205,7 +212,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
             // else, if cities are found, open results!
             else {
-                System.out.println("ON POST " + cityArrayList);
                 intent.putStringArrayListExtra("cityArray",cityArrayList);
                 startActivity(intent);
             }
@@ -224,6 +230,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 } else {
                     latitudeLongitudeInput = latitude + "+" + longitude;
                 }
+
+                // Opens a connection to the database
                 URL url = new URL(url1 + latitudeLongitudeInput + url2);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -235,7 +243,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 }
                 reader = new BufferedReader(new InputStreamReader(in));
                 getStringFromBuffer(reader);
-                System.out.println("CityArrayBackground: " + cityArrayList.toString());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -258,18 +265,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                     buffer.append(line + '\n');
                 }
                 bufferedReader.close();
-
+                // retrieves city data in the form of a JSON Object, converts to JSON Array
                 JSONObject JSONObj = new JSONObject(buffer.toString());
                 JSONArray jsonArray = JSONObj.getJSONArray("data");
-                System.out.println("Length of City List: " + jsonArray.length());
 
+                // Loops through entire JSON Array, adding each city value to the cityArrayList
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject JSONObject = new JSONObject(jsonArray.get(i).toString());
                     cityArrayList.add(JSONObject.getString("city"));
                 }
-
-                System.out.println("First City in Array: " + cityArrayList.get(0));
-                System.out.println("Entire City Array: " + cityArrayList.toString());
                 return cityArrayList;
 
             } catch (Exception e) {
@@ -277,8 +281,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 return null;
             }
 
-        } else {
-            System.out.println("BufferedReader is null");
         }
         return null;
     }

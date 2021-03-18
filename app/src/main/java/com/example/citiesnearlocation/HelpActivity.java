@@ -4,6 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+/*
+
+ *  Developed by: Kyle Chutjian & Max Petruzziello
+ *  Date Submitted: 3/18/2021
+ *  CitiesNearLocation Application
+
+ */
+
 public class HelpActivity extends AppCompatActivity {
 
     @Override

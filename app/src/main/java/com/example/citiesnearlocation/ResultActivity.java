@@ -21,6 +21,14 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+/*
+
+ *  Developed by: Kyle Chutjian & Max Petruzziello
+ *  Date Submitted: 3/18/2021
+ *  CitiesNearLocation Application
+
+ */
+
 public class ResultActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -54,8 +62,6 @@ public class ResultActivity extends AppCompatActivity {
 
         // retrieve cities
         cityArrayList = getIntent().getStringArrayListExtra("cityArray");
-        System.out.println("ResultArray: " + cityArrayList.toString());
-        System.out.println("CityArray: " + cityArrayList.toString());
 
         // populate recycle view
         recyclerView = findViewById(R.id.recyclerView);

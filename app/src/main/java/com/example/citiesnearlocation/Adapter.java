@@ -14,6 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+
+ *  Developed by: Kyle Chutjian & Max Petruzziello
+ *  Date Submitted: 3/18/2021
+ *  CitiesNearLocation Application
+
+ */
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
