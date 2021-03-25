@@ -41,6 +41,7 @@ import java.util.ArrayList;
 
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    public static ArrayList<JSONObject> fullCityArray = new ArrayList<>();
     private ArrayList<String> cityArrayList = new ArrayList<String>();
     private GoogleMap mMap;
     private ShareActionProvider shareActionProvider;
@@ -256,6 +257,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     // retrieves Array of cities given values for api
     public ArrayList<String> getStringFromBuffer(BufferedReader bufferedReader) {
         cityArrayList = new ArrayList<String>();
+
+        // Use this array for sending all information about each city
+        fullCityArray = new ArrayList<>();
+
         StringBuffer buffer = new StringBuffer();
         String line;
 
@@ -273,7 +278,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject JSONObject = new JSONObject(jsonArray.get(i).toString());
                     cityArrayList.add(JSONObject.getString("city"));
+                    fullCityArray.add(new JSONObject(jsonArray.get(i).toString()));
                 }
+                System.out.println(fullCityArray.toString());
+                System.out.println(longitude + ", " + latitude);
                 return cityArrayList;
 
             } catch (Exception e) {

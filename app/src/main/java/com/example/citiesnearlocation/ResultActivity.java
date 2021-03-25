@@ -19,6 +19,9 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /*
@@ -38,6 +41,7 @@ public class ResultActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     ArrayList<String> cityArrayList = null;
+    ArrayList<JSONObject> fullCityArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,23 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         // retrieve cities
-        cityArrayList = getIntent().getStringArrayListExtra("cityArray");
+            //cityArrayList = getIntent().getStringArrayListExtra("cityArray");
+
+        // retrieve all information about each city
+        fullCityArray = LocationActivity.fullCityArray;
+        cityArrayList = new ArrayList<String>();
+
+
+        try {
+            for (int i = 0; i < fullCityArray.size(); i++) {
+                System.out.println("\nCity Name: " + fullCityArray.get(i).getString("city") + ". Distance: " + fullCityArray.get(i).getString("distance"));
+                cityArrayList.add(fullCityArray.get(i).getString("city"));
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // populate recycle view
         recyclerView = findViewById(R.id.recyclerView);
