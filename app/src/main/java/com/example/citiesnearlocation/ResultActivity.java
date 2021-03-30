@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -90,6 +92,15 @@ public class ResultActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
+//    public void fragmentClicked(View view){
+//        Fragment fragment = new Fragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("City", 5);
+//        bundle.putString("CityName", "City");
+//        fragment.setArguments(bundle);
+//
+//    }
 
     // CODE FOR ACTION BAR - Same from LocationActivity
     @Override

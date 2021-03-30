@@ -8,18 +8,17 @@
     android:layout_marginLeft="20dp"
     android:layout_marginBottom="20dp">
 
-    <ImageView
-        android:id="@+id/cityImage"
-        android:layout_width="match_parent"
-        android:layout_height="145dp"
-        android:layout_marginTop="-10dp"
-        app:srcCompat="@drawable/cityskyline" />
+    <include
+        android:id="@+id/frag"
+        layout="@layout/activity_city_detail_fragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/cardText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="190dp"
         android:background="@color/cardColor"
         android:paddingLeft="20dp"
         android:text="@string/City_Placeholder"
