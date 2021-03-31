@@ -65,9 +65,7 @@ public class CityListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String[] from = {"cityName"};
-        int[] to = {R.id.cityName1};
-
-        //System.out.println("+++++++" + ResultActivity.cities.getCityName());
+        int[] to = {R.id.cityName};
 
         ArrayList<JSONObject> newArray = LocationActivity.fullCityArray;
         System.out.println(newArray.size());
@@ -86,11 +84,5 @@ public class CityListFragment extends ListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        String[] from = {"cityName"};
-//        int[] to = {10};
-//        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), new Cities().getAdaptorList(),R.layout.activity_city_detail,from,to);
-//        setListAdapter(adapter);
-
-
     }
 }

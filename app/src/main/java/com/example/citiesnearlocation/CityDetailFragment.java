@@ -18,17 +18,21 @@ import java.util.ArrayList;
 
 public class CityDetailFragment extends Fragment {
 
-    private int cityId = -1;
+    public int cityId = -1;
 
     public CityDetailFragment() {}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_city_detail_fragment, container,false);
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        return super.onCreateView(inflater,container,savedInstanceState);
+//    }
 
     public void setCityId(int cityId) {
         this.cityId = cityId;
+    }
+
+    public void test() {
+
     }
 
     @Override
