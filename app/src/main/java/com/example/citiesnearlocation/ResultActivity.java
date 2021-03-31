@@ -66,18 +66,21 @@ public class ResultActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        // retrieve cities
-            //cityArrayList = getIntent().getStringArrayListExtra("cityArray");
-
         // retrieve all information about each city
         fullCityArray = LocationActivity.fullCityArray;
         cityArrayList = new ArrayList<String>();
-
+        Cities cities = new Cities();
+        try {
+            cities.setAdaptorList(fullCityArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         try {
             for (int i = 0; i < fullCityArray.size(); i++) {
                 System.out.println("\nCity Name: " + fullCityArray.get(i).getString("city") + ". Distance: " + fullCityArray.get(i).getString("distance"));
                 cityArrayList.add(fullCityArray.get(i).getString("city"));
+
             }
 
 
@@ -86,21 +89,14 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         // populate recycle view
-        recyclerView = findViewById(R.id.recyclerView);
-        adapter = new Adapter(this, cityArrayList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView = findViewById(R.id.recyclerView);
+//        adapter = new Adapter(this, cityArrayList);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
-//    public void fragmentClicked(View view){
-//        Fragment fragment = new Fragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("City", 5);
-//        bundle.putString("CityName", "City");
-//        fragment.setArguments(bundle);
-//
-//    }
+
 
     // CODE FOR ACTION BAR - Same from LocationActivity
     @Override
@@ -155,6 +151,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-
-
+    public void setCityOnClick(int position) {
+        Intent intent = new Intent(this,CityDetailActivity.class);
+    }
 }

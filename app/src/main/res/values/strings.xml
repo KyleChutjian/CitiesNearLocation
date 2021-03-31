@@ -3,4 +3,6 @@
     <string name="action_share">Share</string>
     <string name="paragraph">"Cities near location utilizes the combination of a Maps SDK as well as a Cities REST API's to help users find nearby cities based on various points around the globe! It uses the Google Maps SDK to allow users to pin various places around the world, then the GEODP REST API finds cities near the selected location using the Longitude and Latitude values from the selected point. The user must select a location on the map and input a radius in order to find results.</string>
     <string name="City_Placeholder">City</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
