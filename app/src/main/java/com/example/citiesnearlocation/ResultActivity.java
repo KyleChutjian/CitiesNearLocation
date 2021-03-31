@@ -20,11 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
+import android.support.v4.app.*;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /*
 
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
+    public static Cities cities;
     private RecyclerView recyclerView;
     private Adapter adapter;
     private ShareActionProvider shareActionProvider;
@@ -66,18 +68,19 @@ public class ResultActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        // retrieve cities
-            //cityArrayList = getIntent().getStringArrayListExtra("cityArray");
-
         // retrieve all information about each city
         fullCityArray = LocationActivity.fullCityArray;
         cityArrayList = new ArrayList<String>();
+        cities = new Cities();
 
+        cities.setAdaptorList(fullCityArray);
+        System.out.println("1st SET ADAPTOR LIST");
 
         try {
             for (int i = 0; i < fullCityArray.size(); i++) {
                 System.out.println("\nCity Name: " + fullCityArray.get(i).getString("city") + ". Distance: " + fullCityArray.get(i).getString("distance"));
                 cityArrayList.add(fullCityArray.get(i).getString("city"));
+
             }
 
 
@@ -86,21 +89,14 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         // populate recycle view
-        recyclerView = findViewById(R.id.recyclerView);
-        adapter = new Adapter(this, cityArrayList);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView = findViewById(R.id.recyclerView);
+//        adapter = new Adapter(this, cityArrayList);
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
-//    public void fragmentClicked(View view){
-//        Fragment fragment = new Fragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("City", 5);
-//        bundle.putString("CityName", "City");
-//        fragment.setArguments(bundle);
-//
-//    }
+
 
     // CODE FOR ACTION BAR - Same from LocationActivity
     @Override
@@ -155,6 +151,9 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-
-
+    public void setCityOnClick(int position) {
+        Intent intent = new Intent(this,CityDetailActivity.class);
+        intent.putExtra("cityId",position);
+        startActivity(intent);
+    }
 }

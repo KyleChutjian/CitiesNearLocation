@@ -5,14 +5,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CityDetailFragment"
-    android:onClick="fragmentClicked">
+    android:id="@+id/activity_city_detail_fragment"
+    tools:context=".CityDetailFragment">
 
     <TextView
         android:id="@+id/cityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Developer of GeoDB"
+        android:text="Name of City"
         android:textColor="@color/textColor"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -22,31 +22,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpTextView" />
 
-    <TextView
-        android:id="@+id/cityCoordinates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="156dp"
-        android:text="https://rapidapi.com/user/wirefreethought"
-        android:textColor="@color/textColor"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/developerTitle"
-        app:layout_constraintTop_toBottomOf="@+id/developerTitle" />
+<!--    <TextView-->
+<!--        android:id="@+id/cityCoordinates"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="156dp"-->
+<!--        android:text="https://rapidapi.com/user/wirefreethought"-->
+<!--        android:textColor="@color/textColor"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/textView4"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/developerTitle"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/developerTitle" />-->
 
-    <TextView
-        android:id="@+id/aboutCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:layout_marginBottom="41dp"
-        android:text="https://rapidapi.com/wirefreethought/api/geodb-cities/details"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/textColor"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/developerTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpTitle" />
+<!--    <TextView-->
+<!--        android:id="@+id/aboutCity"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="38dp"-->
+<!--        android:layout_marginBottom="41dp"-->
+<!--        android:text="https://rapidapi.com/wirefreethought/api/geodb-cities/details"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textAllCaps="false"-->
+<!--        android:textColor="@color/textColor"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/developerTitle"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/helpTitle"-->
+
+
+<!--        />-->
 
 </LinearLayout>
