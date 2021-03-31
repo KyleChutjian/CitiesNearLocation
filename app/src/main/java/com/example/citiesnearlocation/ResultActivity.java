@@ -20,11 +20,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
+import android.support.v4.app.*;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /*
 
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
+    public static Cities cities;
     private RecyclerView recyclerView;
     private Adapter adapter;
     private ShareActionProvider shareActionProvider;
@@ -69,12 +71,10 @@ public class ResultActivity extends AppCompatActivity {
         // retrieve all information about each city
         fullCityArray = LocationActivity.fullCityArray;
         cityArrayList = new ArrayList<String>();
-        Cities cities = new Cities();
-        try {
-            cities.setAdaptorList(fullCityArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        cities = new Cities();
+
+        cities.setAdaptorList(fullCityArray);
+        System.out.println("1st SET ADAPTOR LIST");
 
         try {
             for (int i = 0; i < fullCityArray.size(); i++) {
@@ -153,5 +153,7 @@ public class ResultActivity extends AppCompatActivity {
 
     public void setCityOnClick(int position) {
         Intent intent = new Intent(this,CityDetailActivity.class);
+        intent.putExtra("cityId",position);
+        startActivity(intent);
     }
 }

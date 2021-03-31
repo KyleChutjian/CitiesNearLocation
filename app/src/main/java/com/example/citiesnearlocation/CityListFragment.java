@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
@@ -12,6 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class CityListFragment extends ListFragment {
 
@@ -58,10 +65,32 @@ public class CityListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String[] from = {"cityName"};
-        int[] to = {R.id.cityName};
-        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), new Cities().getAdaptorList(),R.layout.activity_city_detail,from,to);
+        int[] to = {R.id.cityName1};
+
+        //System.out.println("+++++++" + ResultActivity.cities.getCityName());
+
+        ArrayList<JSONObject> newArray = LocationActivity.fullCityArray;
+        System.out.println(newArray.size());
+
+        ResultActivity.cities = new Cities();
+        ResultActivity.cities.setAdaptorList(newArray);
+        System.out.println("2nd SET ADAPTOR LIST");
+
+
+        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), ResultActivity.cities.getAdaptorList(),R.layout.activity_city_detail,from,to);
         setListAdapter(adapter);
 
         return super.onCreateView(inflater,container,savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+//        String[] from = {"cityName"};
+//        int[] to = {10};
+//        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), new Cities().getAdaptorList(),R.layout.activity_city_detail,from,to);
+//        setListAdapter(adapter);
+
+
     }
 }

@@ -8,20 +8,17 @@
     tools:context=".CityDetailActivity">
 
     <TextView
-        android:id="@+id/cityName"
+        android:id="@+id/cityName1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="30dp"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/longitude"
+    <fragment
+        android:id="@+id/fragment_city_detail"
+        android:name="com.example.citiesnearlocation.CityDetailFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/latitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="125px"
+        tools:layout="@layout/activity_city_detail_fragment" />
 </LinearLayout>

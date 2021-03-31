@@ -25,18 +25,27 @@ public class Cities {
     }
 
     public List<HashMap<String,String>> getAdaptorList() {
+        System.out.println("------------------------");
         return adaptorList;
     }
 
-    public void setAdaptorList(ArrayList<JSONObject> fullCityArray) throws JSONException {
-        adaptorList = new ArrayList<HashMap<String, String>>();
+    public void setAdaptorList(ArrayList<JSONObject> fullCityArray) {
 
-//        for (int i = 0; i < fullCityArray.size(); i++) {
-//            HashMap<String,String> hashMap = new HashMap<>();
-//            hashMap.put("cityName", fullCityArray.get(i).getString("city"));
-//            hashMap.put("distance", fullCityArray.get(i).getString("distance"));
-//            adaptorList.add(hashMap);
-//        }
+        System.out.println("SET ADAPTOR LIST START");
+        try {
+            adaptorList = new ArrayList<HashMap<String, String>>();
+            System.out.println("------------------------" + fullCityArray.get(0).getString("city"));
+            for (int i = 0; i < fullCityArray.size(); i++) {
+                HashMap<String,String> hashMap = new HashMap<>();
+                hashMap.put("cityName", fullCityArray.get(i).getString("city"));
+                adaptorList.add(hashMap);
+
+            }
+        } catch (JSONException e) {
+            System.out.println("-----------------------------");
+            e.printStackTrace();
+        }
+
 
     }
 
