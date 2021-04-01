@@ -11,10 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CityDetailActivity"></activity>
-        <activity android:name=".CityDetailFragment" />
-        <activity android:name=".HelpActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDReyV3hE08sVsFud7mTj1GhYETWzZPmrw" />
@@ -29,6 +25,10 @@
         <activity
             android:name=".ResultActivity"
             android:parentActivityName=".LocationActivity" />
+        <activity
+            android:name=".CityDetailActivity"
+            android:parentActivityName=".ResultActivity" />
+        <activity android:name=".HelpActivity" />
     </application>
 
 </manifest>

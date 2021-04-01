@@ -29,12 +29,22 @@ public class CityListFragment extends ListFragment {
     private String mParam2;
     private ResultActivity resultActivity;
 
+    // interface
+    static interface Listener{
+        void itemClicked(long id);
+    };
+
+    private Listener listener;
+
     public CityListFragment() {
     }
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        if (listener != null){
+            listener.itemClicked(id);
+        }
         resultActivity.setCityOnClick(position);
     }
 
@@ -75,7 +85,7 @@ public class CityListFragment extends ListFragment {
         System.out.println("2nd SET ADAPTOR LIST");
 
 
-        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), ResultActivity.cities.getAdaptorList(),R.layout.activity_city_detail,from,to);
+        SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), ResultActivity.cities.getAdaptorList(),R.layout.fragment_city_list,from,to);
         setListAdapter(adapter);
 
         return super.onCreateView(inflater,container,savedInstanceState);

@@ -7,39 +7,24 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.support.v4.app.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /*
-
  *  Developed by: Kyle Chutjian & Max Petruzziello
  *  Date Submitted: 3/18/2021
  *  CitiesNearLocation Application
-
  */
 
 public class ResultActivity extends AppCompatActivity {
 
     public static Cities cities;
-    private RecyclerView recyclerView;
-    private Adapter adapter;
     private ShareActionProvider shareActionProvider;
     private boolean isDarkModeOn;
     private SharedPreferences sharedPreferences;
